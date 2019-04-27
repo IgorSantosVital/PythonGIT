@@ -29,7 +29,7 @@ driver = webdriver.Chrome(chrome_patch)
 driver.get('https://globoesporte.globo.com/cartola-fc/')
 driver.maximize_window()
 
-wait = WebDriverWait(driver, 100)
+wait = WebDriverWait(driver, 30)
 print('Iniciando Automacao: ' + str(datetime.today().hour) + ':' + str(datetime.today().minute))
 
 # acessar o arquivo
@@ -64,21 +64,22 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
             driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').send_keys(selecao)
             time.sleep(1)
             driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').submit()
-            if selecao == 'F.C. Achou errado, otário!':
-                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]/div/span[2]')))
-                nome = driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]/div/span[2]').text
-                if nome == 'Vinícius do Sandero':
-                    wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li[1]/a/div/div/div[2]')))
-                    driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li[1]/a/div/div/div[2]').click()
-                else:
-                    wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li[2]/a/div/div/div[2]')))
-                    driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li[2]/a/div/div/div[2]').click()
-            else:
-                # wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[5]/div/div[2]/div/ul/li[1]/a/div/div/div[2]')))
-                # driver.find_element_by_xpath('/html/body/div/div[5]/div/div[2]/div/ul/li[1]/a/div/div/div[2]').click()
-                wait.until(EC.visibility_of_element_located(
-                    (By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]')))
-                driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]').click()
+            # if selecao == 'F.C. Achou errado, otário!':
+            #     wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]/div/span[2]')))
+            #     nome = driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]/div/span[2]').text
+            #     if nome == 'Vinícius do Sandero':
+            #         wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li[1]/a/div/div/div[2]')))
+            #         driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li[1]/a/div/div/div[2]').click()
+            #     else:
+            #         wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li[2]/a/div/div/div[2]')))
+            #         driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li[2]/a/div/div/div[2]').click()
+            # else:
+            #     # wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[5]/div/div[2]/div/ul/li[1]/a/div/div/div[2]')))
+            #     # driver.find_element_by_xpath('/html/body/div/div[5]/div/div[2]/div/ul/li[1]/a/div/div/div[2]').click()
+            #     wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]')))
+            #     driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]').click()
+            wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]')))
+            driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]').click()
             # procurar a rodada
             while rodadaI <= rodadaF:
                 if aba['A{}'.format(cont)].value is None:
@@ -89,13 +90,23 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
                 time.sleep(2)
                 driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[1]/span[2]').click()
                 # clica na rodada escolhida
-                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada))))
-                time.sleep(2)
-                driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada)).click()
-                time.sleep(2)
+                try:
+                    # wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada))))
+                    time.sleep(2)
+                    driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada)).click()
+                    time.sleep(2)
+                except:
+                    wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label/div')))
+                    time.sleep(2)
+                    driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label/div').click()
+                    time.sleep(2)
                 # copia a pontuação da rodada
-                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[2]/div[1]/div/div[2]/div'.format(rodada))))
-                pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[1]/div/div[2]/div').text
+                try:
+                    wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[2]/div[4]/div')))
+                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[4]/div').text
+                except:
+                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[5]/div').text
+
                 time.sleep(1)
                 # imprimir e salvar rodada na planilha
                 if pontos == "":
