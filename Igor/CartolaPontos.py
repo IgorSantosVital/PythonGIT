@@ -20,7 +20,7 @@ cont = 4
 times = 3
 nomedotime = 'B'
 
-# abrir o site
+# abrir o site cartola
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--start-maximized")
 chrome_options.add_argument("--disable-infobars")
@@ -86,26 +86,26 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
                     aba['A{}'.format(cont)].value = str('RODADA ' + str(rodadaI))
                 time.sleep(5)
                 # clica no botão para ver as rodadas
-                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[1]/span[2]')))
-                time.sleep(2)
-                driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[1]/span[2]').click()
-                # clica na rodada escolhida
-                try:
-                    # wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada))))
-                    time.sleep(2)
-                    driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada)).click()
-                    time.sleep(2)
-                except:
-                    wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label/div')))
-                    time.sleep(2)
-                    driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label/div').click()
-                    time.sleep(2)
+                # wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[1]/span[2]')))
+                # time.sleep(2)
+                # driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[1]/span[2]').click()
+                # # clica na rodada escolhida
+                # try:
+                #     # wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada))))
+                #     time.sleep(2)
+                #     driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label[{}]l/div'.format(rodada)).click()
+                #     time.sleep(2)
+                # except:
+                #     wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label/div')))
+                #     time.sleep(2)
+                #     driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[3]/div/div[1]/div[2]/label/div').click()
+                #     time.sleep(2)
                 # copia a pontuação da rodada
                 try:
-                    wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[2]/div[4]/div')))
-                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[4]/div').text
+                    wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[2]/div[2]/div[3]/div')))
+                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[2]/div[3]/div').text
                 except:
-                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[5]/div').text
+                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[2]/div[4]/div').text
 
                 time.sleep(1)
                 # imprimir e salvar rodada na planilha
@@ -144,4 +144,22 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
     cont = 4
 doc.close()
 driver.quit()
+
+# # abrir o site whatsapp
+# chrome_options = webdriver.ChromeOptions()
+# chrome_options.add_argument("--start-maximized")
+# chrome_options.add_argument("--disable-infobars")
+# chrome_patch = r'C:\Users\igora\PycharmProjects\Driver\chromedriver.exe'
+# driver = webdriver.Chrome(chrome_patch)
+# driver.get('https://web.whatsapp.com')
+# driver.maximize_window()
+#
+# wait = WebDriverWait(driver, 30)
+#
+# input('Abra o arquivo, ordene a pontuação dos times do maior para o menor, salve o arquivo e aperte enter aqui!')
+# # acessar o arquivo
+# arq = r'C:\Users\igora\OneDrive\Documentos\CARTOLA FC\CARTOLA 2019.xlsx'
+# doc = openpyxl.load_workbook(arq)
+# aba = doc.worksheets[1]
+# time.sleep(1)
 
