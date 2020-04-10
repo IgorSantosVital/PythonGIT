@@ -17,6 +17,7 @@ rodadaI = 1
 cont1 = rodadaI
 rodada = rodadaF
 cont = 4
+cont2 = 4
 times = 3
 nomedotime = 'B'
 
@@ -52,18 +53,25 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
             print(selecao)
             # procurar nome do time
             try:
-                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[4]/header-v2/header/div/div[3]/di'
-                                                                       ''
-                                                                       'v/form/input')))
-                driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').click()
+                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div/header/div/div[3]/div/form/input')))
+                driver.find_element_by_xpath('/html/body/div/header/div/div[3]/div/form/input').click()
             except:
-                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[3]/div[3]/div/div/a/svg/svg')))
-                driver.find_element_by_xpath('/html/body/div/div[3]/div[3]/div/div/a/svg/svg').click()
+                wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input')))
+                driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').click()
             time.sleep(1)
-            driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').clear()
-            driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').send_keys(selecao)
+            try:
+                driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').clear()
+                driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').send_keys(selecao)
+            except:
+                driver.find_element_by_xpath(
+                    '/html/body/div/header/div/div[3]/div/form/input').clear()
+                driver.find_element_by_xpath(
+                    '/html/body/div/header/div/div[3]/div/form/input').send_keys(selecao)
             time.sleep(1)
-            driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').submit()
+            try:
+                driver.find_element_by_xpath('/html/body/div[1]/div[4]/header-v2/header/div/div[3]/div/form/input').submit()
+            except:
+                driver.find_element_by_xpath('/html/body/div/header/div/div[3]/div/form/div').submit()
             # if selecao == 'F.C. Achou errado, otário!':
             #     wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]/div/span[2]')))
             #     nome = driver.find_element_by_xpath('/html/body/div[1]/div[6]/div/div[2]/div/ul/li/a/div/div/div[2]/div/span[2]').text
@@ -105,7 +113,7 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
                     wait.until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[6]/ui-view/div[2]/div[2]/div[3]/div')))
                     pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[2]/div[3]/div').text
                 except:
-                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[2]/div[4]/div').text
+                    pontos = driver.find_element_by_xpath('/html/body/div[1]/div[6]/ui-view/div[2]/div[2]/div[5]/div').text
 
                 time.sleep(1)
                 # imprimir e salvar rodada na planilha
@@ -113,9 +121,11 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
                     pontos = 0
                 print('pontuação rodada {}: '.format(rodadaI) + pontos)
                 aba['{}{}'.format(nomedotime, cont)] = float(pontos)
+                aba['M{}'.format(cont2)] = float(pontos)
                 rodadaI += 1
                 rodada -= 1
                 cont += 1
+                cont2 += 1
                 doc.save(arq)
         else:
             rodadaI += 1
@@ -145,21 +155,5 @@ while aba['{}{}'.format(nomedotime, times)].value is not None:
 doc.close()
 driver.quit()
 
-# # abrir o site whatsapp
-# chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument("--start-maximized")
-# chrome_options.add_argument("--disable-infobars")
-# chrome_patch = r'C:\Users\igora\PycharmProjects\Driver\chromedriver.exe'
-# driver = webdriver.Chrome(chrome_patch)
-# driver.get('https://web.whatsapp.com')
-# driver.maximize_window()
-#
-# wait = WebDriverWait(driver, 30)
-#
-# input('Abra o arquivo, ordene a pontuação dos times do maior para o menor, salve o arquivo e aperte enter aqui!')
-# # acessar o arquivo
-# arq = r'C:\Users\igora\OneDrive\Documentos\CARTOLA FC\CARTOLA 2019.xlsx'
-# doc = openpyxl.load_workbook(arq)
-# aba = doc.worksheets[1]
-# time.sleep(1)
+
 
